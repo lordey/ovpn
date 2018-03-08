@@ -1,4 +1,7 @@
 # install webserver
+apt-get -y install nginx
+
+# install webserver
 apt-get -y install nginx php5-fpm php5-cli
 
 # install essential package
@@ -130,5 +133,6 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 sed -i 's|#net.ipv4.ip_forward=1|net.ipv4.ip_forward=1|' /etc/sysctl.conf
 sed -i 's|net.ipv4.ip_forward=0|net.ipv4.ip_forward=1|' /etc/sysctl.conf
 
-# Restart openvpn
+# Restart
 /etc/init.d/openvpn restart
+service php5-fpm restart && service nginx restart
