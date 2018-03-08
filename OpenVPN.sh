@@ -98,35 +98,10 @@ cd /etc/openvpn/
 
 
 #Create OpenVPN Config
-mkdir -p /home/vps/public_html
-cat > /home/vps/public_html/client.ovpn <<-END
-client
-proto tcp
-persist-key
-persist-tun
-dev tun
-pull
-comp-lzo
-ns-cert-type server
-verb 3
-mute 2
-mute-replay-warnings
-auth-user-pass
-redirect-gateway def1
-script-security 2
-route 0.0.0.0 0.0.0.0
-route-method exe
-route-delay 2
-remote $MYIP 1194
-cipher AES-128-CBC
-END
-echo '<ca>' >> /home/vps/public_html/client.ovpn
-cat /etc/openvpn/ca.crt >> /home/vps/public_html/client.ovpn
-echo '</ca>' >> /home/vps/public_html/client.ovpn
-cd /home/vps/public_html/
-tar -czf /home/vps/public_html/openvpn.tar.gz client.ovpn
-tar -czf /home/vps/public_html/client.tar.gz client.ovpn
-cd
+cd /etc/openvpn/
+wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/lordey/wrgsgntng-conf/master/client-1194.conf"
+sed -i $MYIP2 /etc/openvpn/client.ovpn;
+cp client.ovpn /home/vps/public_html/
 
 # set ipv4 forward
 echo 1 > /proc/sys/net/ipv4/ip_forward
